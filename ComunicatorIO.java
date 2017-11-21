@@ -28,10 +28,10 @@ import java.util.ArrayList;
 public class ComunicatorIO
 {
     // the folder for storing data
-    String fileFolder;
-    String fileExtension;
-    String vehicleExtension;
-    String tasksFileName;
+    private final String fileFolder;
+    private final String fileExtension;
+    private final String vehicleExtension;
+    private final String tasksFileName;
     /**
      * Constructor for objects of class ComunicatorIO
      */
@@ -41,6 +41,7 @@ public class ComunicatorIO
         this.fileFolder = "data";
         this.fileExtension = ".txt";
         this.tasksFileName = "tasks";
+        this.vehicleExtension = "CAR";
     }
 
     /**
@@ -57,7 +58,7 @@ public class ComunicatorIO
         }
         else{
             return this.fileFolder + File.separator + fileName +
-            vehicleExtension+ this.fileExtension;
+            vehicleExtension + this.fileExtension;
         }
 
     }
@@ -78,7 +79,7 @@ public class ComunicatorIO
             FilenameFilter filter = new FilenameFilter() {
                     public boolean accept(File file, String name) {
                         if (name.endsWith("tasks.txt")) {
-                            // filters files whose extension is .mp3
+                            // filters files whose extension is tasks.txt
                             return true;
                         } else {
                             return false;

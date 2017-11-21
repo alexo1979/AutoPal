@@ -24,6 +24,16 @@ public class TaskRegistry
     }
 
     /**
+     * Loading the whole base with tasks
+     *
+     * @param  task Individual task 
+     */
+    public void loadTasks(List<Task> tasks)
+    {
+        this.tasks = tasks;
+    }
+    
+    /**
      * Adding individual task in the task list tasks
      *
      * @param  task Individual task 

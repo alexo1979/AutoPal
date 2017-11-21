@@ -1,0 +1,1 @@
+FUEL;default;Toyota;Auris;250.39;20171006

@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Comparator;
 import java.util.Collections;
 
@@ -22,7 +23,7 @@ public class VehicleDataRegistry
      */
     public VehicleDataRegistry()
     {
-        vehicles = new HashMap<>();
+        this.vehicles = new HashMap<>();
     }
 
     /**
@@ -32,11 +33,27 @@ public class VehicleDataRegistry
      */
     public void addVehicleData(VehicleData vehicleData)
     {
-        List<VehicleData> vehicle = vehicles.get(vehicleData.getRegNo());
-        vehicle.add(vehicleData);
-        vehicles.put(vehicleData.getRegNo(), vehicle);
+        boolean newEntenace = true;
+        if(vehicles.keySet().size() > 0) {
+            for (String key : vehicles.keySet()){
+                if (key.equals(vehicleData.getRegNo())){
+                    newEntenace = false;
+                } 
+            }
+        }
+
+        if(newEntenace) {
+            List<VehicleData> vehicle = new ArrayList<>();
+            vehicle.add(vehicleData);
+            vehicles.put(vehicleData.getRegNo(), vehicle);
+        }
+        else {
+            List<VehicleData> vehicle = vehicles.get(vehicleData.getRegNo());
+            vehicle.add(vehicleData);
+            vehicles.put(vehicleData.getRegNo(), vehicle);
+        }
+
     }
-        
     /**
      * Removes individual vehicle data in the registry
      * NOTE: I'll have to implement a chek if the actual task
@@ -51,7 +68,7 @@ public class VehicleDataRegistry
         vehicle.remove(index);
         vehicles.put(regNo, vehicle);
     }
-    
+
     /**
      * Adding vehicle complete data
      *
@@ -62,7 +79,7 @@ public class VehicleDataRegistry
     {
         vehicles.put(regNo, vehicle);
     }
-    
+
     /**
      * Deleting complete vehicle complete data
      *
@@ -72,7 +89,7 @@ public class VehicleDataRegistry
     {
         vehicles.remove(regNo);
     }
-    
+
     /**
      * Sorts all vehicles data by date in the same list
      * ////////////////////////////////////////////////////////////////
@@ -80,14 +97,14 @@ public class VehicleDataRegistry
     public void sortByDate(List<VehicleData> vehicle)
     {
         Collections.sort(vehicle, new Comparator<VehicleData>()
-        {
-            public int compare(VehicleData data1, VehicleData data2)
             {
-                return (int) data1.getPaymentDate().compareTo(data1.getPaymentDate());
-            }
-        });
+                public int compare(VehicleData data1, VehicleData data2)
+                {
+                    return (int) data1.getPaymentDate().compareTo(data1.getPaymentDate());
+                }
+            });
     }
-    
+
     /**
      * Used for passing the registry data in statistic methods
      *

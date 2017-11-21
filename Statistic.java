@@ -77,7 +77,7 @@ public abstract class Statistic
      * @param  y  a sample parameter for a method
      * @return    the sum of x and y
      */
-    public static void findVehicleByDataType(String regNo,String type,
+    public static List<VehicleData> findVehicleByDataType(String regNo,String type,
                                         Map<String, List<VehicleData>> vehicles)
     {
         List<VehicleData> vehicle = findByVehicle(regNo, vehicles);
@@ -89,7 +89,7 @@ public abstract class Statistic
                 vehicleByType.add(vehicleData);
             }
         }
-        //return x + y;
+        return vehicleByType;
     }
     
     /**

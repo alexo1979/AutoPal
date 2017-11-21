@@ -116,6 +116,76 @@ public class ConverterIO
 
         }
     }
+    
+    /**
+     * Transforms the file task data
+     * from the saved file to TaskRegistry
+     *
+     * @param  tasksFile The task data from the saved file.
+     * @param  tasks     The task registry to store the data
+     *                   from the saved file.
+     * 
+     */
+    public Task fileToTask(String taskFile)
+    {
+            Task task = null;
+        
+            if(taskFile.contains(";")){
+                String[] splitTask = taskFile.split(";");
+                if(splitTask.length!=8){
+                    throw new IllegalArgumentException(splitTask +
+                        " - invalid format!");
+                }
+                else{
+                    switch (splitTask[0]) {
+                        case "CARLOAN" :
+                        {
+                            task = new Task ((new CarLoanData(splitTask[1],
+                                splitTask[2], splitTask[3], Double.parseDouble(splitTask[4]),
+                                splitTask[5])), splitTask[6], splitTask[7]);
+                        }
+                        case "FUEL" :
+                        {
+                            task = new Task ((new FuelData(splitTask[1],
+                                splitTask[2], splitTask[3], Double.parseDouble(splitTask[4]),
+                                splitTask[5])), splitTask[6], splitTask[7]);
+                        }
+                        case "ACCESORIE" :
+                        {
+                            task = new Task ((new AccesorieData(splitTask[1],
+                                splitTask[2], splitTask[3], Double.parseDouble(splitTask[4]),
+                                splitTask[5])), splitTask[6], splitTask[7]);
+                        }
+                        case "REGISTRATION" :
+                        {
+                            task = new Task ((new RegistrationData(splitTask[1],
+                                splitTask[2], splitTask[3], Double.parseDouble(splitTask[4]),
+                                splitTask[5])), splitTask[6], splitTask[7]);
+                        }
+                        case "INSURANCE" :
+                        {
+                            task = new Task ((new InsuranceData(splitTask[1],
+                                splitTask[2], splitTask[3], Double.parseDouble(splitTask[4]),
+                                splitTask[5])), splitTask[6], splitTask[7]);
+                        }
+                        case "SERVICEREPAIR" :
+                        {
+                            task = new Task ((new ServiceRepairData(splitTask[1],
+                                splitTask[2], splitTask[3], Double.parseDouble(splitTask[4]),
+                                splitTask[5])), splitTask[6], splitTask[7]);
+                        }
+                        //DEFAULT SHOULD BE ABLE TO THROW EXEPTION!!!!!!!!!!!!
+                    }
+                    
+                }
+            }
+            else{
+                throw new IllegalArgumentException(task +
+                    " - invalid format!");
+            }
+
+            return task;
+    }
 
     /**
      * Transforms the applications vehicle data
@@ -142,6 +212,27 @@ public class ConverterIO
         }
 
         return vehiclesList;
+    }
+    
+    /**
+     * Transforms the applications vehicle data
+     * from the VehicleRegistry for file saving
+     *
+     * @param  vehicles      The vehicle registry data
+     * @return vehiclesList  Map of Lists that contains the data from
+     *                       the vehicle registry as strings delimited
+     *                       with ";".
+     */
+    public List<String> vehicleToFile(List<VehicleData> vehicle)
+    {
+                
+            List<String> vehicleToString = new ArrayList<>();
+
+            for (VehicleData vehicleData : vehicle) {
+                vehicleToString.add(vehicleData.toString());            
+            }
+
+        return vehicleToString;
     }
 
     /**
@@ -176,7 +267,7 @@ public class ConverterIO
                                                     Double.parseDouble(splitVehicleData[4]),
                                                     splitVehicleData[5]));
                         }
-                        else if(splitVehicleData[0].equals("FUELDATA")){
+                        else if(splitVehicleData[0].equals("FUEL")){
                             vehicle.add(new FuelData (splitVehicleData[1],
                                                     splitVehicleData[2], splitVehicleData[3],
                                                     Double.parseDouble(splitVehicleData[4]),
@@ -216,5 +307,72 @@ public class ConverterIO
             }
             vehicles.addVehicle(key,vehicle);
         }
+    }
+    
+    /**
+     * Transforms a single vehicle data
+     * from string file to VehicleData
+     *
+     * @param  vehicleFile   The vehicle data from string.
+     * @return  vehicle      The vehicle to store the data
+     *                       from the string.
+     * 
+     */
+    public VehicleData fileToVehicle(String vehicleFile)
+    {
+                VehicleData vehicle = null;
+            
+                if(vehicleFile.contains(";")){
+                    String[] splitVehicleData = vehicleFile.split(";");
+                    if(splitVehicleData.length!=6){
+                        throw new IllegalArgumentException(splitVehicleData +
+                            " - invalid format!");
+                    }
+                    else{
+                        
+                        if(splitVehicleData[0].equals("CARLOAN")){
+                            vehicle = new CarLoanData (splitVehicleData[1],
+                                                    splitVehicleData[2], splitVehicleData[3],
+                                                    Double.parseDouble(splitVehicleData[4]),
+                                                    splitVehicleData[5]);
+                        }
+                        else if(splitVehicleData[0].equals("FUEL")){
+                            vehicle = new FuelData (splitVehicleData[1],
+                                                    splitVehicleData[2], splitVehicleData[3],
+                                                    Double.parseDouble(splitVehicleData[4]),
+                                                    splitVehicleData[5]);
+                        }
+                        else if(splitVehicleData[0].equals("ACCESORIE")){
+                            vehicle = new AccesorieData (splitVehicleData[1],
+                                                    splitVehicleData[2], splitVehicleData[3],
+                                                    Double.parseDouble(splitVehicleData[4]),
+                                                    splitVehicleData[5]);
+                        }
+                        else if(splitVehicleData[0].equals("REGISTRATION")){
+                            vehicle = new RegistrationData (splitVehicleData[1],
+                                                    splitVehicleData[2], splitVehicleData[3],
+                                                    Double.parseDouble(splitVehicleData[4]),
+                                                    splitVehicleData[5]);
+                        }
+                        else if(splitVehicleData[0].equals("INSURANCE")){
+                            vehicle = new InsuranceData (splitVehicleData[1],
+                                                    splitVehicleData[2], splitVehicleData[3],
+                                                    Double.parseDouble(splitVehicleData[4]),
+                                                    splitVehicleData[5]);
+                        }
+                        else if(splitVehicleData[0].equals("SERVICEREPAIR")){
+                            vehicle = new ServiceRepairData (splitVehicleData[1],
+                                                    splitVehicleData[2], splitVehicleData[3],
+                                                    Double.parseDouble(splitVehicleData[4]),
+                                                    splitVehicleData[5]);
+                        }
+                    }
+                }
+                else{
+                    throw new IllegalArgumentException(vehicle +
+                        " - invalid format!");
+                }
+                
+                return vehicle;
     }
 }
